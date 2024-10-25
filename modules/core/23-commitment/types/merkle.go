@@ -151,21 +151,9 @@ func (proof MerkleProof) VerifyNonMembership(specs []*ics23.ProofSpec, root expo
 			"got ExistenceProof in VerifyNonMembership. If this is unexpected, please ensure that proof was queried with the correct key.")
 	default:
 		return errorsmod.Wrapf(ErrInvalidProof,
-			"expected proof type: %T, got: %T", &ics23.CommitmentProof_Exist{}, proof.Proofs[0].Proof)
+			"expected proof type: %T, got: %T", &ics23.CommitmentProof_Nonexist{}, proof.Proofs[0].Proof)
 	}
 	return nil
-}
-
-// BatchVerifyMembership verifies a group of key value pairs against the given root
-// NOTE: Currently left unimplemented as it is unused
-func (MerkleProof) BatchVerifyMembership(specs []*ics23.ProofSpec, root exported.Root, path exported.Path, items map[string][]byte) error {
-	return errorsmod.Wrap(ErrInvalidProof, "batch proofs are currently unsupported")
-}
-
-// BatchVerifyNonMembership verifies absence of a group of keys against the given root
-// NOTE: Currently left unimplemented as it is unused
-func (MerkleProof) BatchVerifyNonMembership(specs []*ics23.ProofSpec, root exported.Root, path exported.Path, items [][]byte) error {
-	return errorsmod.Wrap(ErrInvalidProof, "batch proofs are currently unsupported")
 }
 
 // verifyChainedMembershipProof takes a list of proofs and specs and verifies each proof sequentially ensuring that the value is committed to

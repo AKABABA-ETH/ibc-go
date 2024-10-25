@@ -36,6 +36,10 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## [Unreleased]
 
+### Testing
+
+* [\#7430](https://github.com/cosmos/ibc-go/pull/7430) Update the block proposer in test chains for each block.
+
 ### Dependencies
 
 * [\#7247](https://github.com/cosmos/ibc-go/pull/7247) Bump CometBFT to v0.38.12.
@@ -53,6 +57,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 * (apps/transfer) [\#7239](https://github.com/cosmos/ibc-go/pull/7239) The following functions have been removed: `BindPort`, `AuthenticateCapability`, `ClaimCapability`
 * (capability) [\#7279](https://github.com/cosmos/ibc-go/pull/7279) The module `capability` has been removed.
 * (testing) [\#7305](https://github.com/cosmos/ibc-go/pull/7305) Added `TrustedValidators` map to `TestChain`. This removes the dependency on the `x/staking` module for retrieving trusted validator sets at a given height, and removes the `GetTrustedValidators` method from the `TestChain` struct.
+* (23-commitment) [\#7486](https://github.com/cosmos/ibc-go/pull/7486) Remove unimplemented `BatchVerifyMembership` and `BatchVerifyNonMembership` functions
 
 ### State Machine Breaking
 
@@ -64,6 +69,7 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 * (apps/27-interchain-accounts) [\#7277](https://github.com/cosmos/ibc-go/pull/7277) Use `GogoResolver` when populating module query safe allow list to avoid panics from unresolvable protobuf dependencies.
 * (core/04-channel) [\#7342](https://github.com/cosmos/ibc-go/pull/7342) Read Tx cmd flags including from address to avoid Address cannot be empty error when upgrade-channels via cli.
+* (core/03-connection) [\#7397](https://github.com/cosmos/ibc-go/pull/7397) Skip the genesis validation connectionID for localhost client.
 
 ## [v9.0.0](https://github.com/cosmos/ibc-go/releases/tag/v9.0.0) - 2024-10-01
 
