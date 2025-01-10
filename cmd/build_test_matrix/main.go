@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -9,6 +10,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 )
@@ -80,15 +82,6 @@ func getExcludedTestFunctions() []string {
 	return strings.Split(exclusions, ",")
 }
 
-func contains(s string, items []string) bool {
-	for _, elem := range items {
-		if elem == s {
-			return true
-		}
-	}
-	return false
-}
-
 // getGithubActionMatrixForTests returns a json string representing the contents that should go in the matrix
 // field in a github action workflow. This string can be used with `fromJSON(str)` to dynamically build
 // the workflow matrix to include all E2E tests under the e2eRootDirectory directory.
@@ -115,11 +108,11 @@ func getGithubActionMatrixForTests(e2eRootDirectory, testName string, suite stri
 			return nil
 		}
 
-		if testName != "" && contains(testName, testCases) {
+		if testName != "" && slices.Contains(testCases, testName) {
 			testCases = []string{testName}
 		}
 
-		if contains(suiteNameForFile, excludedItems) {
+		if slices.Contains(excludedItems, suiteNameForFile) {
 			return nil
 		}
 
@@ -147,7 +140,7 @@ func getGithubActionMatrixForTests(e2eRootDirectory, testName string, suite stri
 	}
 
 	if len(gh.Include) == 0 {
-		return GithubActionTestMatrix{}, fmt.Errorf("no test cases found")
+		return GithubActionTestMatrix{}, errors.New("no test cases found")
 	}
 
 	// Sort the test cases by name so that the order is consistent.
